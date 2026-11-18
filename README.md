@@ -93,4 +93,6 @@ build.cmd
 ## Credits
 Made by **レム** (Rem) · [github.com/Remmychii](https://github.com/Remmychii)
 
+Built with AI assistance (Claude), designed, tested and maintained by レム.
+
 MIT license. Fonts: [Inter Tight](https://github.com/rsms/inter-tight) and [Zen Old Mincho](https://github.com/googlefonts/zen-oldmincho), SIL Open Font License 1.1.
