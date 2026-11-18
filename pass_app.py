@@ -17,7 +17,7 @@ from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 APP = 'Pass'
 IDLE_MIN = 20
 CHUNK = 1 << 20
-CREDIT_URL = 'https://github.com/Remmychii/pass'
+CREDIT_URL = 'https://github.com/Remmychii/Pass'
 ACCENT = '#e05a70'                               # Rem pink (same as ループ Loop)
 
 
