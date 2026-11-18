@@ -11,7 +11,7 @@ Move files between your Windows PC and your phone over home Wi-Fi with a QR code
 ![Setup once, then Send (PC to phone) and Receive (phone to PC)](docs/how-to.png)
 
 ## Get it
-Download `Pass-windows.zip` from [Releases](../../releases), unzip it anywhere, run `Setup.cmd` once, then open `Pass.exe`.
+Download `Pass-windows.zip` from [Releases](../../releases). **Unzip it to a folder you'll keep** (for example `Documents\Pass`), run `Setup.cmd` once, then open `Pass.exe`. Moved the folder later? Run `Setup.cmd` again.
 
 Pass isn't code-signed, so Windows SmartScreen may say "Windows protected your PC". Click **More info → Run anyway**. Prefer to check first? Read `pass_app.py` and build it yourself (below).
 
@@ -45,6 +45,42 @@ Picking from the iPhone Photos picker can turn HEIC into JPG. For the untouched 
 - `Add to Send to.cmd` adds only the Send to entry. To remove it, delete `Pass to phone` from `shell:sendto`.
 - Remove the firewall rule: `netsh advfirewall firewall delete rule name="Pass"` (admin).
 - PC and phone must be on the same Wi-Fi (not guest Wi-Fi).
+
+## Troubleshooting
+The **Help** link in Pass (bottom of the window and of the phone page) opens this section.
+
+**The phone can't open the page, or it keeps loading**
+- PC and phone must be on the **same Wi-Fi**. Guest networks usually block devices from seeing each other.
+- Run `Setup.cmd` (it allows Pass through Windows Firewall). Then check Windows Settings › Network & internet › your Wi-Fi: **Network profile type** must be **Private**. Pass is never allowed on Public networks.
+- Turn off a VPN on the PC or the phone.
+- Some routers have "AP isolation" / "client isolation" turned on, which stops devices on the same Wi-Fi from talking to each other. Turn it off in the router settings, or try another network.
+- If the link starts with something odd (like 172.x or 192.168.56.x), Pass picked a virtual network adapter (VPN, Hyper-V, VirtualBox, WSL). Disable that adapter or the VPN and reopen Pass.
+
+**The QR code won't scan**
+Use the normal camera app, or Google Lens on Android. You can also type the link shown next to the QR into the phone's browser.
+
+**Windows says "Windows protected your PC"**
+Pass isn't code-signed. Click **More info → Run anyway**. You can read the code here and build it yourself instead.
+
+**A download or upload stops halfway**
+Keep the browser tab open and the screen on until it finishes. If a download stops, resume it from the browser's downloads list or tap Download again; a failed upload shows **Retry failed**.
+
+**iPhone photos arrive as JPG instead of HEIC**
+The Photos picker converts them. Pick through **Files**, or set Settings › Camera › Formats to **Most Compatible**.
+
+**Where are the received files?**
+**Downloads › From Phone** on the PC. **Open folder** in the Receive tab goes there.
+
+**"Pass to phone" is gone from Send to, or Windows asks about the firewall again**
+You moved or renamed the Pass folder. Run `Setup.cmd` again from the new spot.
+
+**It stopped sharing by itself**
+After 20 minutes with no transfers, Pass closes its ports. Add the files again (Send) or press **Start receiving** (Receive) for a new QR.
+
+**Uninstall**
+Delete the Pass folder, delete `Pass to phone` from `shell:sendto`, and remove the firewall rule (admin): `netsh advfirewall firewall delete rule name="Pass"`.
+
+**Still stuck?** [Open an issue](https://github.com/Remmychii/Pass/issues) and say what you tried. Please don't post your full link or QR.
 
 ## Build from source
 Windows, Python 3.12:

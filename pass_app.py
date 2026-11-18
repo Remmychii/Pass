@@ -18,6 +18,7 @@ APP = 'Pass'
 IDLE_MIN = 20
 CHUNK = 1 << 20
 CREDIT_URL = 'https://github.com/Remmychii/Pass'
+HELP_URL = CREDIT_URL + '#troubleshooting'
 ACCENT = '#e05a70'                               # Rem pink (same as ループ Loop)
 
 
@@ -100,7 +101,7 @@ input[type=file]{display:none}
 .bar{height:4px;background:var(--line);border-radius:2px;overflow:hidden}.bar i{display:block;height:100%;width:0;background:var(--acc)}
 .f.ok .bar i{background:var(--ok)}.f.bad .s{color:var(--bad)}
 .h{color:var(--mute);font-size:13px;margin-top:18px;overflow-wrap:anywhere}.h b{color:var(--ink);font-weight:600}
-.foot{color:var(--mute);font-size:11px;margin-top:26px;letter-spacing:.04em}
+.foot{color:var(--mute);font-size:11px;margin-top:26px;letter-spacing:.04em}.foot a{color:var(--ink)}
 :focus{outline:none}
 @media (hover:hover){label.pick:hover{border-color:var(--mute)}.b:hover{filter:brightness(1.08)}}
 .and{display:none}html.android .and{display:inline}html.android .ios{display:none}
@@ -111,7 +112,8 @@ PAGE_HEAD = """<!doctype html><html lang="en"><head><meta charset="utf-8">
 <meta name="theme-color" content="#120e10"><title>Pass</title><script>if(/Android/i.test(navigator.userAgent))document.documentElement.className='android'</script><style>__CSS__</style></head><body>
 <div class="top"><b>パス</b><span>pass</span></div>"""
 
-PAGE_FOOT = '<p class="foot">Pass · made by <b>レム</b></p></body></html>'
+PAGE_FOOT = ('<p class="foot">Pass · <a href="' + HELP_URL + '" target="_blank" rel="noopener">Help</a>'
+             ' · made by <b>レム</b></p></body></html>')
 
 
 def phone_page(body):
@@ -505,6 +507,10 @@ class Api:
     def credit(self):
         import webbrowser
         webbrowser.open(CREDIT_URL)
+
+    def help(self):
+        import webbrowser
+        webbrowser.open(HELP_URL)
 
     def boot(self):
         return {'tab': self.start_tab, 'folder': RECEIVE_DIR, 'idle': IDLE_MIN}

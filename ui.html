@@ -88,6 +88,8 @@ button{font:inherit;color:inherit;cursor:pointer}
 .foot .sp{flex:1}
 .foot button{border:0;background:none;color:var(--muted);font-size:11px;padding:2px 0}
 .foot button:hover{color:var(--ink)}
+.foot .help{color:var(--ink)}
+.foot .dot{opacity:.6}
 .foot button b{color:var(--acc);font:900 11.5px var(--mincho);letter-spacing:.04em;margin-left:2px}
 </style></head>
 <body>
@@ -107,6 +109,7 @@ button{font:inherit;color:inherit;cursor:pointer}
 
   <div class="foot">
     <span id="state">No ports open</span><span class="sp"></span>
+    <button class="help" onclick="api('help')" title="Fixes for common problems (opens GitHub)">Help</button><span class="dot">·</span>
     <button onclick="api('credit')" title="Pass on GitHub">made by<b>レム</b></button>
   </div>
 </div>
