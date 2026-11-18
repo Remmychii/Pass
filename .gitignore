@@ -1,0 +1,10 @@
+# private notes (not part of the public repo)
+AI_CONTEXT.md
+
+# build output
+Pass.exe
+build/
+dist/
+release/
+*.spec
+__pycache__/

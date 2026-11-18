@@ -1,0 +1,178 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><title>Pass</title>
+<style>
+__FONTS__
+:root{
+  --bg:#120e10; --bg-2:#1a1517; --card:#1d1719; --ink:#f0eae6; --muted:#968c8c; --line:#2f2729;
+  --acc:__ACC__; --ok:#5fbf8a;
+  --sans:"Inter Tight","Segoe UI","Yu Gothic UI",system-ui,sans-serif;
+  --mincho:"Zen Old Mincho","Yu Mincho",serif;
+  --mono:"Cascadia Mono",Consolas,monospace;
+}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+html,body{height:100%;margin:0;overflow:hidden}
+body{background:var(--bg);color:var(--ink);font:13px/1.45 var(--sans);user-select:none}
+button{font:inherit;color:inherit;cursor:pointer}
+:focus{outline:none}
+:focus-visible{outline:2px solid color-mix(in srgb,var(--acc) 70%,transparent);outline-offset:2px}
+::-webkit-scrollbar{width:8px}::-webkit-scrollbar-thumb{background:var(--line);border-radius:4px}
+
+.win{height:100%;display:grid;grid-template-rows:38px auto minmax(0,1fr) 32px;position:relative;border:1px solid var(--line)}
+.win::after{content:"";position:absolute;inset:0;pointer-events:none;opacity:.04;z-index:5;
+  background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>")}
+
+/* title bar */
+.bar{display:flex;align-items:center;gap:9px;padding-left:12px;border-bottom:1px solid var(--line);background:var(--bg-2)}
+.logo{width:20px;height:20px;border-radius:5px;flex:none}
+.bar b{font:900 14px var(--mincho);letter-spacing:.06em}
+.bar span{color:var(--muted);font-size:12px}
+.wc{margin-left:auto;display:flex;height:100%}
+.wc button{width:44px;border:0;background:none;color:var(--muted);font-size:13px}
+.wc button:hover{background:var(--card);color:var(--ink)}
+.wc button.x:hover{background:#c42b3c;color:#fff}
+
+/* switch */
+.seg{display:grid;grid-template-columns:1fr 1fr;margin:12px 14px 0;border:1px solid var(--line);border-radius:6px;overflow:hidden}
+.seg button{border:0;background:none;padding:7px;color:var(--muted);font-weight:600}
+.seg button.on{background:var(--card);color:var(--ink)}
+.seg button.on i{color:var(--acc)}
+.seg i{font-style:normal;margin-left:4px}
+
+.pane{overflow:auto;padding:12px 14px 14px;min-height:0}
+
+/* drop zone */
+.drop{height:100%;min-height:200px;width:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;
+  border:1px dashed var(--line);border-radius:6px;background:none;color:var(--muted);text-align:center;padding:20px}
+.drop b{color:var(--ink);font-size:14px;font-weight:600}
+.drop:hover,.over .drop{border-color:var(--acc);color:var(--ink)}
+.drop svg{width:28px;height:28px;color:var(--acc);margin-bottom:4px}
+
+/* QR block */
+.qr{display:grid;grid-template-columns:132px minmax(0,1fr);gap:14px;align-items:center;background:var(--card);border:1px solid var(--line);border-radius:6px;padding:10px}
+.qr img{width:132px;height:132px;border-radius:4px;display:block;background:var(--ink)}
+.qr .t{font-weight:600;font-size:13.5px}
+.qr .u{font:11px/1.4 var(--mono);color:var(--muted);word-break:break-all;margin:4px 0 8px}
+.live{display:flex;align-items:center;gap:6px;font-size:11.5px;color:var(--muted)}
+.live::before{content:"";width:6px;height:6px;border-radius:50%;background:var(--acc);box-shadow:0 0 0 3px color-mix(in srgb,var(--acc) 22%,transparent)}
+
+.lbl{display:flex;align-items:center;gap:8px;font-size:10.5px;font-weight:600;letter-spacing:.24em;text-transform:uppercase;color:var(--muted);margin:16px 2px 6px}
+.lbl .sp{flex:1}
+.lk{border:0;background:none;color:var(--muted);font-size:11.5px;font-weight:600;letter-spacing:0;text-transform:none;padding:2px 4px}
+.lk:hover{color:var(--ink)}
+.lk.acc{color:var(--acc)}
+.path{font:11.5px/1.4 var(--mono);color:var(--ink);word-break:break-all;padding:0 2px}
+
+/* file rows */
+.item{display:grid;grid-template-columns:30px minmax(0,1fr) auto;gap:10px;align-items:center;padding:6px 6px;border-radius:6px}
+.item:hover{background:var(--bg-2)}
+.ext{width:30px;height:30px;border-radius:4px;background:var(--card);border:1px solid var(--line);display:grid;place-items:center;
+  font-size:8.5px;font-weight:700;letter-spacing:.04em;color:var(--muted);text-transform:uppercase;overflow:hidden}
+.nm{font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.sz{font-size:11.5px;color:var(--muted)}
+.st{font-size:11.5px;color:var(--muted);text-align:right;min-width:44px}
+.st.done{color:var(--ok)}.st.up{color:var(--acc)}.st.failed{color:#ff8a8a}
+.pb{grid-column:2/4;height:2px;background:var(--line);border-radius:2px;overflow:hidden;margin-top:-2px}
+.pb i{display:block;height:100%;background:var(--acc)}
+.done-row .pb i{background:var(--ok)}
+.empty{color:var(--muted);font-size:12.5px;padding:8px 4px}
+
+.btn{border:1px solid var(--line);background:var(--card);color:var(--ink);font-weight:600;font-size:12.5px;padding:8px 12px;border-radius:4px}
+.btn:hover{border-color:var(--muted)}
+.btn.acc{background:var(--acc);border-color:var(--acc);color:var(--bg)}
+.btn.acc:hover{filter:brightness(1.08)}
+.center{height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;color:var(--muted);text-align:center}
+
+/* footer */
+.foot{display:flex;align-items:center;gap:8px;padding:0 12px;border-top:1px solid var(--line);background:var(--bg-2);color:var(--muted);font-size:11px}
+.foot .sp{flex:1}
+.foot button{border:0;background:none;color:var(--muted);font-size:11px;padding:2px 0}
+.foot button:hover{color:var(--ink)}
+.foot button b{color:var(--acc);font:900 11.5px var(--mincho);letter-spacing:.04em;margin-left:2px}
+</style></head>
+<body>
+<div class="win" id="win">
+  <div class="bar pywebview-drag-region">
+    <img class="logo" alt="" src="data:image/png;base64,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">
+    <b>パス</b><span>pass</span>
+    <div class="wc"><button title="Minimize" onclick="api('minimize')">&#x2013;</button><button class="x" title="Close" onclick="api('close')">&#x2715;</button></div>
+  </div>
+
+  <div class="seg">
+    <button id="t-send" class="on" onclick="tab('send')">Send<i>→</i></button>
+    <button id="t-recv" onclick="tab('recv')">Receive<i>←</i></button>
+  </div>
+
+  <div class="pane" id="pane"></div>
+
+  <div class="foot">
+    <span id="state">No ports open</span><span class="sp"></span>
+    <button onclick="api('credit')" title="Pass on GitHub">made by<b>レム</b></button>
+  </div>
+</div>
+
+<script>
+var cur='send', data={send:null,recv:null}, boot={folder:'',idle:20}, last='';
+function api(n){var a=[].slice.call(arguments,1);return window.pywebview?window.pywebview.api[n].apply(null,a):Promise.resolve()}
+function esc(s){return String(s).replace(/[&<>"]/g,function(c){return{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]})}
+function ext(n){var m=/\.([a-z0-9]{1,4})$/i.exec(n);return m?m[1]:'file'}
+
+function tab(t){cur=t;last='';
+  document.getElementById('t-send').className=t=='send'?'on':'';
+  document.getElementById('t-recv').className=t=='recv'?'on':'';
+  if(t=='recv'&&!data.recv)api('start_receive').then(poll);
+  render();}
+
+function rows(files,kind){
+  if(!files.length)return '<div class="empty">'+(kind=='send'?'No files yet.':'Waiting for files from the phone…')+'</div>';
+  return files.map(function(f){
+    var st=f.state=='done'?'Done':f.state=='failed'?'Failed':f.state=='wait'?'Waiting':f.pct+'%';
+    var cls=f.state=='wait'?'':f.state;
+    return '<div class="item'+(f.state=='done'?' done-row':'')+'"><div class="ext">'+esc(ext(f.name))+'</div>'+
+      '<div style="min-width:0"><div class="nm" title="'+esc(f.name)+'">'+esc(f.name)+'</div><div class="sz">'+esc(f.size)+'</div></div>'+
+      '<div class="st '+cls+'">'+st+'</div>'+
+      (f.state=='up'||f.state=='done'?'<div class="pb"><i style="width:'+f.pct+'%"></i></div>':'')+'</div>';
+  }).join('');}
+
+function qr(s,title){
+  return '<div class="qr"><img src="'+s.qr+'" alt="QR code"><div><div class="t">'+title+'</div>'+
+    '<div class="u">'+esc(s.url)+'</div><div class="live">'+(s.active?'Transferring':'Same Wi-Fi only')+'</div></div></div>';}
+
+function render(){
+  var s=data[cur], html;
+  if(cur=='send'){
+    if(!s) html='<button class="drop" onclick="api(\'pick\')">'+
+      '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 15V4M7.5 8.5 12 4l4.5 4.5"/><path d="M4 14v4a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-4"/></svg>'+
+      '<b>Drop files here</b>or click to pick. Videos and photos go full size.</button>';
+    else html=qr(s,'Scan with your phone camera')+
+      '<div class="lbl">Files '+s.files.length+'<span class="sp"></span><button class="lk acc" onclick="api(\'pick\')">+ Add</button><button class="lk" onclick="api(\'clear\').then(poll)">Stop</button></div>'+
+      rows(s.files,'send');
+  } else {
+    if(!s) html='<div class="center">Receiving is off.<button class="btn acc" onclick="api(\'start_receive\').then(poll)">Start receiving</button></div>';
+    else html=qr(s,'Scan, then choose files on the phone')+
+      '<div class="lbl">Saves to<span class="sp"></span><button class="lk acc" onclick="api(\'open_folder\')">Open folder</button><button class="lk" onclick="api(\'stop_receive\').then(poll)">Stop</button></div>'+
+      '<div class="path">'+esc(boot.folder)+'</div>'+
+      '<div class="lbl">Received</div>'+rows(s.files,'recv');
+  }
+  if(html!==last){document.getElementById('pane').innerHTML=html;last=html;}
+  var ports=[data.send&&data.send.port,data.recv&&data.recv.port].filter(Boolean);
+  document.getElementById('state').textContent=ports.length?((ports.length>1?'Ports ':'Port ')+ports.join(' + ')+' open · closes with Pass'):'No ports open';
+  document.getElementById('state').title=ports.length?('Closing Pass, pressing Stop, or '+boot.idle+' min with no transfers closes it'):'';
+}
+
+function poll(){return api('status').then(function(d){if(d){data=d;render();}})}
+window.dropped=function(){poll()};
+
+// drag and drop: highlight; Python reads the real file paths from the drop event
+var win=document.getElementById('win'),depth=0;
+document.addEventListener('dragenter',function(e){e.preventDefault();depth++;if(cur!='send')tab('send');win.classList.add('over')});
+document.addEventListener('dragleave',function(){if(--depth<=0){depth=0;win.classList.remove('over')}});
+document.addEventListener('dragover',function(e){e.preventDefault()});
+document.addEventListener('drop',function(e){e.preventDefault();depth=0;win.classList.remove('over')});
+
+window.addEventListener('pywebviewready',function(){
+  api('boot').then(function(b){boot=b;poll().then(function(){tab(b.tab)});setInterval(poll,500)});
+});
+render();
+</script>
+</body></html>

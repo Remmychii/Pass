@@ -1,0 +1,72 @@
+<!doctype html>
+<!-- Source of docs/how-to.png. Render: python tools/render_how_to.py -->
+<html><head><meta charset="utf-8">
+<style>
+@font-face{font-family:'Inter Tight';font-weight:100 900;src:url(../fonts/InterTight.woff2) format('woff2')}
+@font-face{font-family:'Zen Old Mincho';font-weight:900;src:url(../fonts/ZenOldMincho-kana.woff2) format('woff2')}
+:root{--bg:#120e10;--bg-2:#1a1517;--card:#1d1719;--ink:#f0eae6;--muted:#968c8c;--line:#2f2729;--acc:#e05a70;--ok:#5fbf8a;
+  --sans:"Inter Tight","Segoe UI",sans-serif;--mincho:"Zen Old Mincho","Yu Mincho",serif}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{width:1080px;height:1080px;background:var(--bg);color:var(--ink);font-family:var(--sans);overflow:hidden}
+body{padding:96px 72px;position:relative}
+body::after{content:"";position:absolute;inset:0;pointer-events:none;opacity:.05;
+  background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>")}
+.head{display:flex;align-items:center;gap:20px}
+.head img{width:76px;height:76px}
+.head b{font:900 54px var(--mincho);letter-spacing:.06em}
+.head span{color:var(--muted);font-size:30px;font-weight:500;margin-left:4px}
+.sub{color:var(--muted);font-size:24px;margin-top:16px}
+.lbl{font-size:15px;font-weight:600;letter-spacing:.26em;text-transform:uppercase;color:var(--muted);margin:50px 0 16px;display:flex;align-items:center;gap:12px}
+.lbl i{font-style:normal;color:var(--acc);letter-spacing:0;font-size:20px}
+.sheet{display:grid;gap:1px;background:var(--line);border:1px solid var(--line);border-radius:8px;overflow:hidden}
+.sheet.three{grid-template-columns:repeat(3,1fr)}
+.cell{background:var(--card);padding:20px 22px 22px}
+.n{font:900 17px var(--mincho);color:var(--acc);letter-spacing:.06em}
+.cell b{display:block;font-size:21px;font-weight:700;margin:8px 0 6px}
+.cell p{color:var(--muted);font-size:17px;line-height:1.4}
+.cell p em{font-style:normal;color:var(--ink)}
+.cols{display:grid;grid-template-columns:1fr 1fr;gap:22px}
+.cols .sheet{grid-template-columns:1fr}
+.cols .cell{display:grid;grid-template-columns:34px 1fr;gap:4px 10px;padding:17px 20px}
+.cols .cell .n{grid-row:1/3;padding-top:3px}
+.cols .cell b{margin:0}
+.ports{margin-top:44px;display:flex;align-items:center;gap:14px;font-size:19px;color:var(--ink)}
+.ports::before{content:"";width:10px;height:10px;border-radius:50%;background:var(--acc);box-shadow:0 0 0 5px color-mix(in srgb,var(--acc) 22%,transparent);flex:none}
+.ports span{color:var(--muted)}
+.foot{position:absolute;left:72px;right:72px;bottom:54px;display:flex;justify-content:space-between;color:var(--muted);font-size:16px}
+.foot b{font:900 17px var(--mincho);color:var(--acc);letter-spacing:.04em;margin-left:4px}
+</style></head>
+<body>
+<div class="head"><img src="../icon.png" alt=""><b>パス</b><span>pass</span></div>
+<p class="sub">PC ⇄ phone over home Wi-Fi. Full quality. No app on the phone, no cloud.</p>
+
+<div class="lbl">Setup · once</div>
+<div class="sheet three">
+  <div class="cell"><span class="n">01</span><b>Download</b><p>Get the zip from <em>Releases</em> and unzip it anywhere.</p></div>
+  <div class="cell"><span class="n">02</span><b>Run Setup.cmd</b><p>Allows Pass on <em>Private</em> Wi-Fi only and adds it to right-click <em>Send to</em>.</p></div>
+  <div class="cell"><span class="n">03</span><b>Open Pass.exe</b><p>Windows may warn: <em>More info → Run anyway</em>.</p></div>
+</div>
+
+<div class="cols">
+  <div>
+    <div class="lbl">Send<i>→</i>PC to phone</div>
+    <div class="sheet">
+      <div class="cell"><span class="n">01</span><b>Drop files on Pass</b><p>or click to pick, or right-click → Send to.</p></div>
+      <div class="cell"><span class="n">02</span><b>Scan the QR</b><p>with the phone camera, tap <em>Download</em>.</p></div>
+      <div class="cell"><span class="n">03</span><b>Save to Photos</b><p>Files › Downloads → Share → Save Video.</p></div>
+    </div>
+  </div>
+  <div>
+    <div class="lbl">Receive<i>←</i>phone to PC</div>
+    <div class="sheet">
+      <div class="cell"><span class="n">01</span><b>Open Receive</b><p>and scan the QR with the phone.</p></div>
+      <div class="cell"><span class="n">02</span><b>Choose files</b><p>photos, videos or files, tap <em>Upload</em>.</p></div>
+      <div class="cell"><span class="n">03</span><b>Find them on the PC</b><p>Downloads › From Phone. Nothing is overwritten.</p></div>
+    </div>
+  </div>
+</div>
+
+<p class="ports">Ports open only while sharing.<span>Close Pass, press Stop, or leave it idle 20 min: they close.</span></p>
+
+<div class="foot"><span>Same Wi-Fi only · nothing leaves your network</span><span>made by<b>レム</b></span></div>
+</body></html>
