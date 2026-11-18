@@ -2,7 +2,13 @@
 
 Move files between your Windows PC and your phone over home Wi-Fi with a QR code. Both ways. No app on the phone, no cloud, no account, no compression: files arrive byte for byte.
 
-![How to use Pass](docs/how-to.png)
+<p align="center"><img src="docs/demo.gif" alt="Pass sending three files to a phone, then receiving two from it" width="400"></p>
+
+<p align="center"><img src="docs/phone.png" alt="The phone side: Download buttons when sending, a file picker with progress when receiving" width="760"></p>
+
+## How to use
+
+![Setup once, then Send (PC to phone) and Receive (phone to PC)](docs/how-to.png)
 
 ## Get it
 Download `Pass-windows.zip` from [Releases](../../releases), unzip it anywhere, run `Setup.cmd` once, then open `Pass.exe`.
