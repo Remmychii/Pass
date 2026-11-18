@@ -21,13 +21,16 @@ Pass isn't code-signed, so Windows SmartScreen may say "Windows protected your P
 1. Drop files on the window (or click to pick, or right-click files → Send to → **Pass to phone**).
 2. Scan the QR with the phone camera and tap **Download**.
 3. iPhone: **Files › Downloads** → tap the file → **Share** → **Save Video** / **Save Image** to put it in Photos.
+   Android: it's in **Downloads** (Files app, or the Downloads album in Gallery / Google Photos).
 
 **Receive (phone → PC)**
 1. Switch to **Receive** and scan the QR.
 2. Tap **Choose photos, videos or files**, pick them, tap **Upload**.
 3. Files land in **Downloads › From Phone** (**Open folder** jumps there). Same names get ` (1)`, ` (2)` added; nothing is overwritten.
 
-Keep Safari open and the screen on until a transfer finishes (an interrupted download resumes).
+Keep the browser tab open and the screen on until a transfer finishes (an interrupted download resumes). Works with iPhone (Safari) and Android (Chrome); the phone page shows the right tips for each.
+
+Scanning: iPhone and most Android cameras read QR codes directly; otherwise use Google Lens or a QR app.
 
 Picking from the iPhone Photos picker can turn HEIC into JPG. For the untouched original, pick through **Files**, or set Settings › Camera › Formats to **Most Compatible**.
 

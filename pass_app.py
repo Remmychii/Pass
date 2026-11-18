@@ -103,11 +103,12 @@ input[type=file]{display:none}
 .foot{color:var(--mute);font-size:11px;margin-top:26px;letter-spacing:.04em}
 :focus{outline:none}
 @media (hover:hover){label.pick:hover{border-color:var(--mute)}.b:hover{filter:brightness(1.08)}}
+.and{display:none}html.android .and{display:inline}html.android .ios{display:none}
 """
 
 PAGE_HEAD = """<!doctype html><html lang="en"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
-<meta name="theme-color" content="#120e10"><title>Pass</title><style>__CSS__</style></head><body>
+<meta name="theme-color" content="#120e10"><title>Pass</title><script>if(/Android/i.test(navigator.userAgent))document.documentElement.className='android'</script><style>__CSS__</style></head><body>
 <div class="top"><b>パス</b><span>pass</span></div>"""
 
 PAGE_FOOT = '<p class="foot">Pass · made by <b>レム</b></p></body></html>'
@@ -167,9 +168,12 @@ def make_handler(st):
                 for i, p in enumerate(list(st.files)) if os.path.isfile(p))
             body = phone_page(
                 '<div class="lbl">From your PC</div>' + (items or '<p class="h">No files yet.</p>') +
-                '<p class="h">Tap <b>Download</b>, then <b>Files › Downloads</b> → tap the file → '
+                '<p class="h"><span class="ios">Tap <b>Download</b>, then <b>Files › Downloads</b> → tap the file → '
                 '<b>Share</b> → <b>Save Video</b> (or Save Image) to put it in Photos.<br><br>'
-                'Keep Safari open until it finishes.</p>')
+                'Keep Safari open until it finishes.</span>'
+                '<span class="and">Tap <b>Download</b>. It saves to the phone’s <b>Downloads</b> folder: '
+                'open it from the download bar, the <b>Files</b> app, or <b>Gallery / Photos</b> (Downloads album).<br><br>'
+                'Keep this tab open until it finishes.</span></p>')
             self.send_response(200)
             self.send_header('Content-Type', 'text/html; charset=utf-8')
             self.send_header('Content-Length', str(len(body)))
@@ -284,7 +288,7 @@ RECV_BODY = """<div class="lbl">Send to your PC</div>
 <input id="f" type="file" multiple>
 <div id="list" style="margin-top:8px"></div>
 <button class="b" id="go" disabled style="margin-top:8px">Upload</button>
-<p class="h">Saved full size on the PC in <b>__FOLDER__</b>.<br><br>Keep Safari open and the screen on until every file says <b>Done</b>.</p>
+<p class="h">Saved full size on the PC in <b>__FOLDER__</b>.<br><br>Keep <span class="ios">Safari</span><span class="and">this tab</span> open and the screen on until every file says <b>Done</b>.</p>
 <script>
 var T='__TOKEN__',inp=document.getElementById('f'),list=document.getElementById('list'),go=document.getElementById('go'),rows=[],busy=false;
 function human(n){var u=['B','KB','MB','GB'],i=0;while(n>=1024&&i<3){n/=1024;i++}return (i?n.toFixed(1):n)+' '+u[i]}
